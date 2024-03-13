@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Golf Score App</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script defer src="main.js"></script>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <div id="project-container" class="container-fluid">
+      <div id="header-container" class="row bg-success">
+        <div id="header" class="col-12 p-2">
+          <h1>Welcome! Please enjoy your game today!</h1>
+        </div>
+      </div>
+      <div class="row bg-primary">
+        <div class="col-12">
+          <div class="options-container p-2">
+            <h1>OPTIONS:</h1>
+            <div class="form-group">
+              <label for="course-select">Select Course</label>
+              <select class="form-control" id="course-select"></select>
+            </div>
+            <div id="tee-box-select">
+              <label for="tee-select">Select Tee</label>
+              <select class="form-control" id="tee-select"></select>
+            </div>
+            <div id="player-box-select">
+              <label for="player-select">Select Players?</label>
+              <select class="form-control" id="player-select">
+                <option value="1">1 PLAYER</option>
+                <option value="2">2 PLAYER</option>
+                <option value="3">3 PLAYER</option>
+                <option value="4">4 PLAYER</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="scorecard-container" class="row">
+        <div id="scorecard" class="col-12">
+          <div id="front-nine-container" class="table-responsive">
+            <h2>FRONT 9</h2>
+            <table id="front-nine" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>HOLE</th>
+                  <th>01</th>
+                  <th>02</th>
+                  <th>03</th>
+                  <th>04</th>
+                  <th>05</th>
+                  <th>06</th>
+                  <th>07</th>
+                  <th>08</th>
+                  <th>09</th>
+                  <th>OUT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>YARDAGE</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PAR</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>HANDICAP</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PLAYER 1</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PLAYER 2</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div id="back-nine-container" class="table-responsive">
+            <h2>BACK 9</h2>
+            <table id="back-nine" class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>HOLE</th>
+                  <th>10</th>
+                  <th>11</th>
+                  <th>12</th>
+                  <th>13</th>
+                  <th>14</th>
+                  <th>15</th>
+                  <th>16</th>
+                  <th>17</th>
+                  <th>18</th>
+                  <th>IN</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th>YARDAGE</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PAR</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>HANDICAP</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PLAYER 1</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th>PLAYER 2</th>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
