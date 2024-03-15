@@ -26,7 +26,11 @@
             <h1>OPTIONS:</h1>
             <div class="form-group">
               <label for="course-select">Select Course</label>
-              <select class="form-control" id="course-select"></select>
+              <select
+                class="form-control"
+                id="course-select"
+                onchange="courseSelected()"
+              ></select>
             </div>
             <div id="tee-box-select">
               <label for="tee-select">Select Tee</label>
@@ -117,19 +121,6 @@
                   <td></td>
                   <td></td>
                 </tr>
-                <tr>
-                  <th>PLAYER 2</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
               </tbody>
             </table>
           </div>
@@ -193,19 +184,6 @@
                 </tr>
                 <tr>
                   <th>PLAYER 1</th>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
-                <tr>
-                  <th>PLAYER 2</th>
                   <td></td>
                   <td></td>
                   <td></td>
