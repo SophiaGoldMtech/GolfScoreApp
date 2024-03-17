@@ -62,7 +62,6 @@ function getGolfCourseDetails(golfCourseId) {
 
 function teeSelection(courseDetails) {
   let selectedTee = document.getElementById("tee-select").value;
-
   let holeStats = courseDetails.holes.map(function (hole) {
     return {
       yardage: hole.teeBoxes[selectedTee].yards,
@@ -74,7 +73,41 @@ function teeSelection(courseDetails) {
 }
 
 function render(holeStats) {
-  console.log(holeStats);
-  let scorecard = document.getElementById("scorecard-container");
-  let tableHtml = ``;
+  clearTableBody();
+
+  holeStats.forEach((hole, index) => {
+    if (index < 9) {
+      const yardageRow = document.getElementById("front-yardage");
+      const parRow = document.getElementById("front-par");
+      const handicapRow = document.getElementById("front-handicap");
+
+      appendDataToRow(yardageRow, holeStats[index].yardage);
+      appendDataToRow(parRow, holeStats[index].par);
+      appendDataToRow(handicapRow, holeStats[index].handicap);
+    } else {
+      const yardageRow = document.getElementById("back-yardage");
+      const parRow = document.getElementById("back-par");
+      const handicapRow = document.getElementById("back-handicap");
+
+      appendDataToRow(yardageRow, holeStats[index].yardage);
+      appendDataToRow(parRow, holeStats[index].par);
+      appendDataToRow(handicapRow, holeStats[index].handicap);
+    }
+  });
+}
+
+function clearTableBody() {
+  const frontNine = document.getElementById("front-nine");
+  const tdElements = frontNine.querySelectorAll("td");
+  tdElements.forEach((td) => td.remove());
+
+  const backNine = document.getElementById("back-nine");
+  const tdElementsBack = backNine.querySelectorAll("td");
+  tdElementsBack.forEach((td) => td.remove());
+}
+
+function appendDataToRow(row, data) {
+  const cell = document.createElement("td");
+  cell.textContent = data;
+  row.appendChild(cell);
 }
