@@ -14,38 +14,21 @@
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <div id="project-container" class="container-fluid">
+    <div
+      id="project-container"
+      class="container-fluid vh-100 d-flex flex-column"
+    >
       <div id="header-container" class="row bg-success">
         <div id="header" class="col-12 p-2">
           <h1>Welcome! Let's play golf!</h1>
         </div>
       </div>
-      <div class="row bg-primary">
-        <div class="col-12">
-          <div class="options-container p-2">
-            <h1>OPTIONS:</h1>
-            <div class="form-group">
-              <label for="course-select">Select Course</label>
-              <select
-                class="form-control"
-                id="course-select"
-                onchange="courseSelection()"
-              ></select>
-            </div>
-            <div id="tee-box-select">
-              <label for="tee-select">Select Tee</label>
-              <select class="form-control" id="tee-select"></select>
-            </div>
-            <div class="add-player">
-              <input placeholder="Enter Name" id="player-input" type="text" />
-              <button id="add-player-btn">Add Player</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="scorecard-container" class="row">
+      <div
+        id="scorecard-container"
+        class="row align-items-center flex-grow-1 bg-warning"
+      >
         <div id="scorecard" class="col-12">
-          <div id="front-nine-container" class="table-responsive">
+          <div id="front-nine-container " class="table-responsive p-4">
             <h2>FRONT 9</h2>
             <table id="front-nine" class="table">
               <thead>
@@ -76,7 +59,7 @@
               </tbody>
             </table>
           </div>
-          <div id="back-nine-container" class="table-responsive">
+          <div id="back-nine-container" class="table-responsive p-4">
             <h2>BACK 9</h2>
             <table id="back-nine" class="table">
               <thead>
@@ -107,6 +90,45 @@
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 position-sticky bottom-0 bg-primary h-25">
+          <div class="options-container p-2">
+            <h1>OPTIONS:</h1>
+            <div class="form-group p-2">
+              <label for="course-select">Select Course</label>
+              <select
+                class="form-control"
+                id="course-select"
+                onchange="courseSelection()"
+              ></select>
+            </div>
+            <div id="tee-box-select" class="p-2">
+              <label for="tee-select">Select Tee</label>
+              <select class="form-control" id="tee-select"></select>
+            </div>
+            <div class="add-player p-2 input-group">
+              <input
+                placeholder="Enter Name"
+                id="player-input"
+                type="text"
+                class="form-control"
+              />
+              <button id="add-player-btn" class="btn btn btn-outline-secondary">
+                Add Player
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 border border-3">
+          <h1>Add Your Score here</h1>
+          <div class="currentScore">
+            <h4>
+              You should be on something hole and it should be somebodies turn.
+            </h4>
+          </div>
+          <input type="number" min="1" placeholder="Input Your Score Here" />
         </div>
       </div>
     </div>
