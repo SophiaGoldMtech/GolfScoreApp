@@ -111,3 +111,55 @@ function appendDataToRow(row, data) {
   cell.textContent = data;
   row.appendChild(cell);
 }
+
+let players = [];
+
+class Player {
+  constructor(name, id, scores = []) {
+    this.name = name;
+    this.id = id;
+    this.scores = scores;
+  }
+}
+
+function addPlayer() {
+  const playerNameInput = document.getElementById("player-input");
+  const playerName = playerNameInput.value.trim().toUpperCase();
+
+  if (playerName === "") {
+    alert("Please enter a valid player name.");
+    return;
+  }
+
+  if (!playerRender(playerName)) {
+    return;
+  }
+
+  const playerId = players.length + 1;
+  const newPlayer = new Player(playerName, playerId);
+  players.push(newPlayer);
+
+  playerNameInput.value = "";
+}
+
+document.getElementById("add-player-btn").addEventListener("click", addPlayer);
+
+function playerRender(playerName) {
+  const frontTable = document.getElementById("front-tbody");
+  const backTable = document.getElementById("back-tbody");
+
+  if (!frontTable || !backTable) {
+    console.error("Front or back table does not exist.");
+    return false;
+  }
+
+  const frontPlayerRow = document.createElement("tr");
+  frontPlayerRow.innerHTML = `<th>${playerName}</th>`;
+  frontTable.appendChild(frontPlayerRow);
+
+  const backPlayerRow = document.createElement("tr");
+  backPlayerRow.innerHTML = `<th>${playerName}</th>`;
+  backTable.appendChild(backPlayerRow);
+
+  return true;
+}

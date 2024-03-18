@@ -36,15 +36,10 @@
               <label for="tee-select">Select Tee</label>
               <select class="form-control" id="tee-select"></select>
             </div>
-            <!-- <div id="player-box-select">
-              <label for="player-select">Select Players?</label>
-              <select class="form-control" id="player-select">
-                <option value="1">1 PLAYER</option>
-                <option value="2">2 PLAYER</option>
-                <option value="3">3 PLAYER</option>
-                <option value="4">4 PLAYER</option>
-              </select>
-            </div> -->
+            <div class="add-player">
+              <input placeholder="Enter Name" id="player-input" type="text" />
+              <button id="add-player-btn">Add Player</button>
+            </div>
           </div>
         </div>
       </div>
@@ -52,10 +47,10 @@
         <div id="scorecard" class="col-12">
           <div id="front-nine-container" class="table-responsive">
             <h2>FRONT 9</h2>
-            <table id="front-nine" class="table table-bordered">
+            <table id="front-nine" class="table">
               <thead>
-                <tr>
-                  <th>HOLE</th>
+                <tr class="">
+                  <th class="">HOLE</th>
                   <th>01</th>
                   <th>02</th>
                   <th>03</th>
@@ -65,10 +60,10 @@
                   <th>07</th>
                   <th>08</th>
                   <th>09</th>
-                  <th>OUT</th>
+                  <th class="">OUT</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="front-tbody">
                 <tr id="front-yardage">
                   <th>YARDAGE</th>
                 </tr>
@@ -83,10 +78,10 @@
           </div>
           <div id="back-nine-container" class="table-responsive">
             <h2>BACK 9</h2>
-            <table id="back-nine" class="table table-bordered">
+            <table id="back-nine" class="table">
               <thead>
-                <tr>
-                  <th>HOLE</th>
+                <tr class="">
+                  <th class="">HOLE</th>
                   <th>10</th>
                   <th>11</th>
                   <th>12</th>
@@ -96,10 +91,10 @@
                   <th>16</th>
                   <th>17</th>
                   <th>18</th>
-                  <th>IN</th>
+                  <th class="">IN</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody id="back-tbody">
                 <tr id="back-yardage">
                   <th>YARDAGE</th>
                 </tr>
