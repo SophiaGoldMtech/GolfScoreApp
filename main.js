@@ -147,6 +147,7 @@ function addPlayer() {
       playerNameInput.value = "";
     } else {
       alert("Golf is only for 4 people at a time.");
+      playerNameInput.value = "";
     }
   }
 }
@@ -159,6 +160,7 @@ let currentHoleNumber = 1;
 function playerRender(playerName) {
   const frontTable = document.getElementById("front-tbody");
   const backTable = document.getElementById("back-tbody");
+  const totalTable = document.getElementById("total-tbody");
 
   if (!frontTable || !backTable) {
     console.error("Front or back table does not exist.");
@@ -175,6 +177,14 @@ function playerRender(playerName) {
   backPlayerRow.innerHTML = `<th>${playerName}</th>`;
   backTable.appendChild(backPlayerRow);
 
+  const totalPlayerRow = document.createElement("tr");
+  totalPlayerRow.setAttribute("id", playerName.toLowerCase() + "-total-row");
+  totalPlayerRow.innerHTML = `<th>${playerName}</th>
+  <td id="${playerName.toLowerCase()}-total-score"></td>`;
+  totalTable.appendChild(totalPlayerRow);
+
+  sillyMessages();
+
   let frontCells = frontPlayerRow.cells.length;
   let backCells = 10;
 
@@ -189,9 +199,6 @@ function playerRender(playerName) {
     backCells++;
   }
   backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-in"></td>`;
-  backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-total"></td>`;
-
-  console.log(frontTable);
 
   return true;
 }
@@ -216,6 +223,8 @@ function addScore() {
     currentHoleNumber++;
   }
   whosTurn();
+  sillyMessages();
+  gameOver();
 }
 
 document.getElementById("score-submit-btn").addEventListener("click", addScore);
@@ -228,7 +237,14 @@ function scoreRender() {
 
 function whosTurn() {
   const currentScore = document.getElementById("current-score");
-  currentScore.innerHTML = `Hey, ${players[currentPlayer].name}! It's your turn! We're currently playing hole ${currentHoleNumber}.`;
+  if (currentHoleNumber < 18) {
+    currentScore.innerHTML = `Hey, ${players[currentPlayer].name}! It's your turn! We're currently playing hole ${currentHoleNumber}.`;
+  } else if ((currentHoleNumber = 18)) {
+    alert(`This is your last hole, fellas. Make it a good one.`);
+    currentScore.innerHTML = `Thanks for playing ${players[
+      currentPlayer
+    ].name.toLowerCase()}. We had a blast! Don't be a stranger. See you soon.`;
+  }
 }
 
 function calculateSum(currentPlayer) {
@@ -247,7 +263,7 @@ function calculateSum(currentPlayer) {
   const inCell = document.getElementById(`${player}-in`);
   inCell.innerHTML = inSum;
 
-  const totalCell = document.getElementById(`${player}-total`);
+  const totalCell = document.getElementById(`${player}-total-score`);
   totalCell.innerHTML = total;
 }
 
@@ -256,4 +272,56 @@ function sumArray(scores) {
     (accumulator, currentValue) => accumulator + currentValue,
     0
   );
+}
+
+function sillyMessages() {
+  const tableLabel = document.getElementById("total-table-label");
+  let totalTableHtml = ``;
+  if (currentHoleNumber === 1) {
+    totalTableHtml = `*TOTAL SCORES*`;
+  } else if (currentHoleNumber === 2) {
+    totalTableHtml = `Nice first round, can you do it again?`;
+  } else if (currentHoleNumber === 3) {
+    totalTableHtml = `Well that one was certainly something...`;
+  } else if (currentHoleNumber === 4) {
+    totalTableHtml = `No no no, your swing is GREAT. You don't need to work on that ~AT ALL~`;
+  } else if (currentHoleNumber === 5) {
+    totalTableHtml = `¯\_(ツ)_/¯`;
+  } else if (currentHoleNumber === 6) {
+    totalTableHtml = `I really wasn't sure if I'd like you all...`;
+  } else if (currentHoleNumber === 7) {
+    totalTableHtml = `That's it. I just didn't think I'd like you.`;
+  } else if (currentHoleNumber === 8) {
+    totalTableHtml = `It's your hair. Is that on purpose?`;
+  } else if (currentHoleNumber === 9) {
+    totalTableHtml = `YES? Well that's my bad.`;
+  } else if (currentHoleNumber === 10) {
+    totalTableHtml = `In my defense, I don't have hair, I don't know how it's supposed to work.`;
+  } else if (currentHoleNumber === 11) {
+    totalTableHtml = `See? No hair. \(•◡•)/`;
+  } else if (currentHoleNumber === 12) {
+    totalTableHtml = `(~˘▾˘)~ This is me, by the way. I'm not sure if that was clear.`;
+  } else if (currentHoleNumber === 13) {
+    totalTableHtml = `You guys really aren't that bad...♥‿♥`;
+  } else if (currentHoleNumber === 14) {
+    totalTableHtml = `I think maybe we're best friends now? ⚆ _ ⚆`;
+  } else if (currentHoleNumber === 15) {
+    totalTableHtml = `BUT WAIT! Hole 15??? And then you leave me?!`;
+  } else if (currentHoleNumber === 16) {
+    totalTableHtml = `ಠ╭╮ಠ ... (ง'̀-'́)ง ... (ಥ﹏ಥ)`;
+  } else if (currentHoleNumber === 17) {
+    totalTableHtml = `I miss you already ♡`;
+  } else if (currentHoleNumber === 18) {
+    totalTableHtml = `Goodbye old friend, I'll never forget how bad you were at golf. LUV U! BYE!`;
+    let gameOver = true;
+    return gameOver;
+  }
+  tableLabel.innerHTML = totalTableHtml;
+}
+
+function gameOver() {
+  if (gameOver) {
+    document.documentElement.innerHTML =
+      "What are you still doing here? GOLF is over. Go home.";
+  }
 }
