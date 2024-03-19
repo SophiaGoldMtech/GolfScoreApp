@@ -1,32 +1,24 @@
 function getAvailableGolfCourses() {
-  return [
-    {
-      id: 11819,
-      name: "Thanksgiving Point Golf Course - Lehi, UT",
-      url: "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course11819.json",
-    },
-    {
-      id: 18300,
-      name: "Fox Hollow Golf Course - American Fork, UT",
-      url: "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course18300.json",
-    },
-    {
-      id: 19002,
-      name: "Spanish Oaks Golf Course - Spanish Fork, UT",
-      url: "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course19002.json",
-    },
-  ];
+  return fetch(
+    "https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/courses.json"
+  )
+    .then(function (response) {
+      return response.json();
+    })
+    .then((data) => {
+      let courses = data;
+
+      let courseOptionsHtml =
+        "<option value='-1' selected disabled hidden>Select Course</option>";
+      courses.forEach((course) => {
+        courseOptionsHtml += `<option value="${course.id}">${course.name}</option>`;
+      });
+
+      document.getElementById("course-select").innerHTML = courseOptionsHtml;
+    });
 }
 
-let courses = getAvailableGolfCourses();
-
-let courseOptionsHtml =
-  "<option value='-1' selected disabled hidden>Select Course</option>";
-courses.forEach((course) => {
-  courseOptionsHtml += `<option value="${course.id}">${course.name}</option>`;
-});
-
-document.getElementById("course-select").innerHTML = courseOptionsHtml;
+getAvailableGolfCourses();
 
 function courseSelection() {
   let golfCourseId = document.getElementById("course-select").value;
@@ -55,7 +47,9 @@ function courseSelection() {
 }
 
 function getGolfCourseDetails(golfCourseId) {
-  return fetch("./response.json").then((response) => {
+  return fetch(
+    `https://exquisite-pastelito-9d4dd1.netlify.app/golfapi/course${golfCourseId}.json`
+  ).then(function (response) {
     return response.json();
   });
 }
@@ -132,26 +126,28 @@ class Player {
 }
 
 function addPlayer() {
-  if (players.length < 4) {
-    const playerNameInput = document.getElementById("player-input");
-    const playerName = playerNameInput.value.trim().toUpperCase();
+  if (players.length === 0 || players[0].scores.length === 0) {
+    if (players.length < 4) {
+      const playerNameInput = document.getElementById("player-input");
+      const playerName = playerNameInput.value.trim().toUpperCase();
 
-    if (playerName === "") {
-      alert("Please enter a valid player name.");
-      return;
+      if (playerName === "") {
+        alert("Please enter a valid player name.");
+        return;
+      }
+
+      if (!playerRender(playerName)) {
+        return;
+      }
+
+      const playerId = players.length + 1;
+      const newPlayer = new Player(playerName, playerId);
+      players.push(newPlayer);
+
+      playerNameInput.value = "";
+    } else {
+      alert("Golf is only for 4 people at a time.");
     }
-
-    if (!playerRender(playerName)) {
-      return;
-    }
-
-    const playerId = players.length + 1;
-    const newPlayer = new Player(playerName, playerId);
-    players.push(newPlayer);
-
-    playerNameInput.value = "";
-  } else {
-    alert("Golf is only for 4 people at a time.");
   }
 }
 
@@ -202,11 +198,16 @@ function playerRender(playerName) {
 
 function addScore() {
   let scoreInput = document.getElementById("score-input");
-  let score = scoreInput.value;
+  let score = parseInt(scoreInput.value);
+  if (isNaN(score)) {
+    alert("Please input a valid number.");
+    return;
+  }
   players[currentPlayer].scores.push(score);
   scoreInput.value = "";
 
   scoreRender();
+  calculateSum(currentPlayer);
 
   if (currentPlayer < players.length - 1) {
     currentPlayer++;
@@ -228,4 +229,31 @@ function scoreRender() {
 function whosTurn() {
   const currentScore = document.getElementById("current-score");
   currentScore.innerHTML = `Hey, ${players[currentPlayer].name}! It's your turn! We're currently playing hole ${currentHoleNumber}.`;
+}
+
+function calculateSum(currentPlayer) {
+  let player = players[currentPlayer].name.toLowerCase();
+  let score = players[currentPlayer].scores;
+  let outArray = score.slice(0, 9);
+  let inArray = score.slice(9, 18);
+
+  let outSum = sumArray(outArray);
+  let inSum = sumArray(inArray);
+  let total = outSum + inSum;
+
+  const outCell = document.getElementById(`${player}-out`);
+  outCell.innerHTML = outSum;
+
+  const inCell = document.getElementById(`${player}-in`);
+  inCell.innerHTML = inSum;
+
+  const totalCell = document.getElementById(`${player}-total`);
+  totalCell.innerHTML = total;
+}
+
+function sumArray(scores) {
+  return scores.reduce(
+    (accumulator, currentValue) => accumulator + currentValue,
+    0
+  );
 }
