@@ -319,9 +319,9 @@ function sillyMessages() {
   tableLabel.innerHTML = totalTableHtml;
 }
 
-function gameOver() {
-  if (gameOver) {
-    document.documentElement.innerHTML =
-      "What are you still doing here? GOLF is over. Go home.";
-  }
-}
+// function gameOver() {
+//   if (gameOver) {
+//     document.documentElement.innerHTML =
+//       "What are you still doing here? GOLF is over. Go home.";
+//   }
+// }
