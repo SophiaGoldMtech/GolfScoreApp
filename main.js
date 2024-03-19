@@ -144,6 +144,8 @@ function addPlayer() {
 
 document.getElementById("add-player-btn").addEventListener("click", addPlayer);
 
+let currentPlayer = 0;
+
 function playerRender(playerName) {
   const frontTable = document.getElementById("front-tbody");
   const backTable = document.getElementById("back-tbody");
@@ -154,12 +156,46 @@ function playerRender(playerName) {
   }
 
   const frontPlayerRow = document.createElement("tr");
+  frontPlayerRow.setAttribute("id", playerName.toLowerCase() + "-front-row");
   frontPlayerRow.innerHTML = `<th>${playerName}</th>`;
   frontTable.appendChild(frontPlayerRow);
 
   const backPlayerRow = document.createElement("tr");
+  backPlayerRow.setAttribute("id", playerName.toLowerCase() + "-back-row");
   backPlayerRow.innerHTML = `<th>${playerName}</th>`;
   backTable.appendChild(backPlayerRow);
 
+  let frontCells = frontPlayerRow.cells.length;
+  let backCells = backPlayerRow.cells.length;
+
+  while (frontCells < 10) {
+    frontPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-${frontCells}"></td>`;
+    frontCells = frontPlayerRow.cells.length;
+  }
+  frontPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-out"></td>`;
+
+  while (backCells < 11) {
+    backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-${backCells}"></td>`;
+    backCells = backPlayerRow.cells.length;
+  }
+  backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-in"></td>`;
+  backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-total"></td>`;
+
+  console.log(frontTable);
+
   return true;
 }
+
+function addScore() {
+  let scoreInput = document.getElementById("score-input");
+  let score = scoreInput.value;
+  players[currentPlayer].scores.push(score);
+
+  if (currentPlayer < players.length - 1) {
+    currentPlayer++;
+  } else {
+    currentPlayer = 0;
+  }
+}
+
+document.getElementById("score-submit-btn").addEventListener("click", addScore);
