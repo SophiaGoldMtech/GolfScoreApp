@@ -120,31 +120,45 @@ class Player {
     this.id = id;
     this.scores = scores;
   }
+
+  updateTableScores() {
+    this.scores.forEach((score, index) => {
+      let cell = document.getElementById(
+        `${this.name.toLowerCase()}-${index + 1}`
+      );
+      cell.innerHTML = score;
+    });
+  }
 }
 
 function addPlayer() {
-  const playerNameInput = document.getElementById("player-input");
-  const playerName = playerNameInput.value.trim().toUpperCase();
+  if (players.length < 4) {
+    const playerNameInput = document.getElementById("player-input");
+    const playerName = playerNameInput.value.trim().toUpperCase();
 
-  if (playerName === "") {
-    alert("Please enter a valid player name.");
-    return;
+    if (playerName === "") {
+      alert("Please enter a valid player name.");
+      return;
+    }
+
+    if (!playerRender(playerName)) {
+      return;
+    }
+
+    const playerId = players.length + 1;
+    const newPlayer = new Player(playerName, playerId);
+    players.push(newPlayer);
+
+    playerNameInput.value = "";
+  } else {
+    alert("Golf is only for 4 people at a time.");
   }
-
-  if (!playerRender(playerName)) {
-    return;
-  }
-
-  const playerId = players.length + 1;
-  const newPlayer = new Player(playerName, playerId);
-  players.push(newPlayer);
-
-  playerNameInput.value = "";
 }
 
 document.getElementById("add-player-btn").addEventListener("click", addPlayer);
 
 let currentPlayer = 0;
+let currentHoleNumber = 1;
 
 function playerRender(playerName) {
   const frontTable = document.getElementById("front-tbody");
@@ -166,7 +180,7 @@ function playerRender(playerName) {
   backTable.appendChild(backPlayerRow);
 
   let frontCells = frontPlayerRow.cells.length;
-  let backCells = backPlayerRow.cells.length;
+  let backCells = 10;
 
   while (frontCells < 10) {
     frontPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-${frontCells}"></td>`;
@@ -174,9 +188,9 @@ function playerRender(playerName) {
   }
   frontPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-out"></td>`;
 
-  while (backCells < 11) {
+  while (backCells < 19) {
     backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-${backCells}"></td>`;
-    backCells = backPlayerRow.cells.length;
+    backCells++;
   }
   backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-in"></td>`;
   backPlayerRow.innerHTML += `<td id="${playerName.toLowerCase()}-total"></td>`;
@@ -190,12 +204,28 @@ function addScore() {
   let scoreInput = document.getElementById("score-input");
   let score = scoreInput.value;
   players[currentPlayer].scores.push(score);
+  scoreInput.value = "";
+
+  scoreRender();
 
   if (currentPlayer < players.length - 1) {
     currentPlayer++;
   } else {
     currentPlayer = 0;
+    currentHoleNumber++;
   }
+  whosTurn();
 }
 
 document.getElementById("score-submit-btn").addEventListener("click", addScore);
+
+function scoreRender() {
+  players.forEach((player) => {
+    player.updateTableScores();
+  });
+}
+
+function whosTurn() {
+  const currentScore = document.getElementById("current-score");
+  currentScore.innerHTML = `Hey, ${players[currentPlayer].name}! It's your turn! We're currently playing hole ${currentHoleNumber}.`;
+}
